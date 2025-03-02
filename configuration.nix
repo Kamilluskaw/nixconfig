@@ -43,12 +43,20 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+# Enable the XFCE Desktop Environment.
+services.xserver = {
+  enable = true;
+  displayManager.lightdm.enable = true;
+  desktopManager.xfce.enable = true;
 
-  # Enable the XFCE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
-
+  # Configure Xfce window manager margins
+  displayManager.sessionCommands = ''
+    xfconf-query -c xfwm4 -p /general/margin_top -s 10
+    xfconf-query -c xfwm4 -p /general/margin_bottom -s 10
+    xfconf-query -c xfwm4 -p /general/margin_left -s 10
+    xfconf-query -c xfwm4 -p /general/margin_right -s 10
+  '';
+};
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "hu";
@@ -132,9 +140,11 @@ programs.steam = {
 			unrar
 			git
 			picom
+			conky
+			xwinwrap
+			mpv
 		#Gaming
 			obs-studio
-			discord
 			steamcmd
 			steam-tui
 			(prismlauncher.override {
@@ -142,6 +152,10 @@ programs.steam = {
         		})
 			lutris 
 			wine
+			(discord.override {
+    				withVencord = true; # Enable Vencord
+  			})
+
 		#Anime
 		   	ani-cli
 
@@ -158,7 +172,6 @@ programs.steam = {
       			#Clears gens older than 3days, only keeps latest 3
      				echo "woof woof deleted :3"
     				${pkgs.nix}/bin/nix-env --delete-generations +3
-      				${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 3d
 
 			#Upgrades the system 
                                 echo "uwu,,,i love new packages ;3"
@@ -177,7 +190,7 @@ programs.steam = {
      				echo "woof nothing happened,,,"
     			fi
   			else
-   				echo "Git repository not found in /etc/nixos. Skipping Git operations."
+   				echo "huh"
  			fi
    			# Wait for 10 seconds before shutting down
   			        echo "honk mimimi,,"
@@ -189,6 +202,22 @@ programs.steam = {
     			'')
   ];
 
+  # Enable picom
+  services.picom = {
+    enable = true;
+  };
+
+
+  # Run your custom script at startup
+  systemd.user.services.custom-gaps = {
+    description = "Apply custom gaps";
+    wantedBy = [ "graphical-session.target" ];
+    after = [ "picom.service" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.bash}/bin/bash /home/milka/add-gaps.sh";
+      Restart = "no";
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -197,8 +226,7 @@ programs.steam = {
   #   enable = true;
   #   enableSSHSupport = true;
 
-  # List services that you want to enable:
-
+  # List services that you want to enable
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
