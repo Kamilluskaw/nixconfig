@@ -164,15 +164,21 @@ programs.steam = {
                                 echo "uwu,,,i love new packages ;3"
                                 ${config.system.build.nixos-rebuild}/bin/nixos-rebuild switch --upgrade
 
-     			# Mirror the config to git
-     				echo "Mirroringgg :0"
-   		if [ -n "$(${pkgs.git}/bin/git status --porcelain)" ]; then
-     				${pkgs.git}/bin/git add .
-      				${pkgs.git}/bin/git commit -m "Automated NixOS configuration update"
-      				${pkgs.git}/bin/git push origin master
-    		else
+ 			# Mirror the config to git
+  				echo "Mirroringgg :0"
+  			if [ -d "/etc/nixos/.git" ]; then
+    				cd /etc/nixos
+    			if [ -n "$(${pkgs.git}/bin/git status --porcelain)" ]; then
+      			# Run Git commands as the user who owns the repository
+      				sudo -u milka ${pkgs.git}/bin/git add .
+      				sudo -u milka ${pkgs.git}/bin/git commit -m "Automated NixOS configuration update"
+     				sudo -u milka ${pkgs.git}/bin/git push origin master
+    			else
      				echo "woof nothing happened,,,"
-   		fi			
+    			fi
+  			else
+   				echo "Git repository not found in /etc/nixos. Skipping Git operations."
+ 			fi
    		   # Wait for 10 seconds before shutting down
   			        echo "honk mimimi,,"
       				${pkgs.coreutils}/bin/sleep 10
