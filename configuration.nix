@@ -115,8 +115,8 @@ programs.steam = {
   dedicatedServer.openFirewall = true;  # Optional: Open ports for Source Dedicated Server
 };
 
- #Charging setting
-services.tlp.enable = true;
+  #Charging setting 
+  services.tlp.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
