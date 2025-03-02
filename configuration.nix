@@ -131,6 +131,7 @@ services.tlp.enable = true;
 			vscode
 			unrar
 			git
+			picom
 		#Gaming
 			obs-studio
 			discord
@@ -165,10 +166,17 @@ services.tlp.enable = true;
 
      			# Mirror the config to git
      				echo "Mirroringgg :0"
-      				cd /etc/nixos
-      				${pkgs.git}/bin/git add .
-      				${pkgs.git}/bin/git commit -m "Automated NixOS configuration update"
-      				${pkgs.git}/bin/git push origin main
+      			if ${pkgs.git}/bin/git status --porcelain; then
+        			${pkgs.git}/bin/git add .
+     			        ${pkgs.git}/bin/git commit -m "Automated NixOS configuration update"
+        			${pkgs.git}/bin/git push origin master
+      			else
+        			echo "woof nothing happened,,,"
+      			fi
+			
+   		   # Wait for 10 seconds before shutting down
+  			        echo "honk mimimi,,"
+      				${pkgs.coreutils}/bin/sleep 10
      			 # Shuts the system
       				echo "nyaaa,,,"
    				echo "Cum again :3"
