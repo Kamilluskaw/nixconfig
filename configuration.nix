@@ -179,13 +179,13 @@ programs.steam = {
   			else
    				echo "Git repository not found in /etc/nixos. Skipping Git operations."
  			fi
-   		   # Wait for 10 seconds before shutting down
+   			# Wait for 10 seconds before shutting down
   			        echo "honk mimimi,,"
       				${pkgs.coreutils}/bin/sleep 10
-     			 # Shuts the system
-      			#	echo "nyaaa,,,"
-   			#	echo "Cum again :3"
-      			#	${pkgs.systemd}/bin/shutdown -h now
+     		   	# Shuts the system
+      				echo "nyaaa,,,"
+   				echo "Cum again :3"
+      				${pkgs.systemd}/bin/shutdown -h now
     			'')
   ];
 
