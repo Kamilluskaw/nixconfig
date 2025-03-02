@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "Kamillaptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -158,7 +158,6 @@ programs.steam = {
 
 		#Anime
 		   	ani-cli
-
 		#Recum
 			(writeShellScriptBin "recum" ''
 			#Rebuilds the system
@@ -201,23 +200,6 @@ programs.steam = {
       				${pkgs.systemd}/bin/shutdown -h now
     			'')
   ];
-
-  # Enable picom
-  services.picom = {
-    enable = true;
-  };
-
-
-  # Run your custom script at startup
-  systemd.user.services.custom-gaps = {
-    description = "Apply custom gaps";
-    wantedBy = [ "graphical-session.target" ];
-    after = [ "picom.service" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.bash}/bin/bash /home/milka/add-gaps.sh";
-      Restart = "no";
-    };
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
