@@ -143,6 +143,9 @@ programs.steam = {
 			conky
 			xwinwrap
 			mpv
+			krita
+			kdenlive
+			godot_4
 		#Gaming
 			obs-studio
 			steamcmd
