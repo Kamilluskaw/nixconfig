@@ -140,9 +140,6 @@ programs.steam = {
 			unrar
 			git
 			picom
-			conky
-			xwinwrap
-			mpv
 			krita
 			kdenlive
 			godot_4
