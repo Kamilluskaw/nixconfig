@@ -14,6 +14,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+
+
   networking.hostName = "Kamillaptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -48,7 +50,6 @@ services.xserver = {
   enable = true;
   displayManager.lightdm.enable = true;
   desktopManager.xfce.enable = true;
-
   # Configure Xfce window manager margins
   displayManager.sessionCommands = ''
     xfconf-query -c xfwm4 -p /general/margin_top -s 10
@@ -123,8 +124,18 @@ programs.steam = {
   dedicatedServer.openFirewall = true;  # Optional: Open ports for Source Dedicated Server
 };
 
+
   #Charging setting 
-  services.tlp.enable = true;
+services.tlp = {
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+    };
+  };
+
+
+environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -143,6 +154,9 @@ programs.steam = {
 			krita
 			kdenlive
 			godot_4
+			tidal-hifi
+			eww
+			kitty
 		#Gaming
 			obs-studio
 			steamcmd
